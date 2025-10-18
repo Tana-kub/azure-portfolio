@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2em;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            color: #34495e;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .project {
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+
+        .project:hover {
+            transform: translateX(5px);
+        }
+
+        .project h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .admin-panel {
+            background: #e8f4fc;
+            border: 1px solid #b3d9ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .admin-panel h3 {
+            color: #2980b9;
+            margin-bottom: 15px;
+        }
+
+        textarea, input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+        }
+
+        button {
+            background: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 My Portfolio</h1>
+            <p>Welcome to my personal portfolio website</p>
+        </div>
+
+        <div class="section">
+            <h2>About Me</h2>
+            <p id="about-text">Hello! I'm a developer building my portfolio on Azure Cloud. This website is hosted using Azure Static Web Apps.</p>
+        </div>
+
+        <div class="section">
+            <h2>My Projects</h2>
+            <div id="projects-list">
+                <div class="project">
+                    <h3>Portfolio Website</h3>
+                    <p>Built with Azure Static Web Apps, HTML, CSS, and JavaScript</p>
+                    <p><strong>Technologies:</strong> Azure, HTML5, CSS3, JavaScript</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Skills</h2>
+            <div id="skills-list">
+                <p>Web Development, Cloud Computing, Azure Services</p>
+            </div>
+        </div>
+
+        <div class="admin-panel">
+            <h3>🔧 Admin Panel</h3>
+            <textarea id="about-editor" rows="4" placeholder="Edit about me text..."></textarea>
+            <button onclick="saveAbout()">Save Changes</button>
+        </div>
+    </div>
+
+    <script>
+        // โหลดข้อมูลจาก localStorage
+        function loadPortfolio() {
+            const about = localStorage.getItem('portfolio_about') || 'Hello! I\'m a developer building my portfolio on Azure Cloud. This website is hosted using Azure Static Web Apps.';
+            const projects = JSON.parse(localStorage.getItem('portfolio_projects') || '[{"title":"Portfolio Website","description":"Built with Azure Static Web Apps, HTML, CSS, and JavaScript","technologies":"Azure, HTML5, CSS3, JavaScript"}]');
+            
+            document.getElementById('about-text').textContent = about;
+            document.getElementById('about-editor').value = about;
+            
+            // แสดง projects
+            const projectsList = document.getElementById('projects-list');
+            projectsList.innerHTML = projects.map(project => `
+                <div class="project">
+                    <h3>${project.title}</h3>
+                    <p>${project.description}</p>
+                    <p><strong>Technologies:</strong> ${project.technologies}</p>
+                </div>
+            `).join('');
+        }
+
+        // บันทึกข้อมูล
+        function saveAbout() {
+            const aboutText = document.getElementById('about-editor').value;
+            localStorage.setItem('portfolio_about', aboutText);
+            loadPortfolio();
+            alert('✅ Changes saved successfully!');
+        }
+
+        // โหลดข้อมูลเมื่อหน้าเว็บโหลดเสร็จ
+        document.addEventListener('DOMContentLoaded', loadPortfolio);
+    </script>
+</body>
+</html>
